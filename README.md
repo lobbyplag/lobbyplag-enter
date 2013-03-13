@@ -2,17 +2,30 @@
 
 A small tool for manual entering data for the [LobbyPlag](http://www.lobbyplag.eu/) project.
 
-Needed: `directive.json` and `documents.json`
+Needed Data: `directive.json` and `documents.json`
 
-## config.js
+##Requirements
+
+[http://nodejs.org/](http://nodejs.org/)
+
+modules for node js in path `plagenter/`
+
+	npm install
+	
+## plagenter/config.js
 
 ```` javascript
 config = {
-  dataPathSource: '../data/',	 	//path to documents.json & directive.json
+        dataPathSource: '../data/',	//path to documents.json & directive.json
 	dataPathDest: '../newdata/',	//path where to save the result fragment json files
-	port: 3000					 	//port for the server
+	port: 3000			//port for the server
 };
 ````
+
+## plagenter/app.js
+
+run with node and enter data with the browser
+
 
 ## result data
 
