@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>PlagEnter</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link type="text/css" href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link type="text/css" href="/static/index.css" rel="stylesheet">
+	<link type="text/css" href="/static/chosen/chosen.css" rel="stylesheet"/>
+	<script type="text/javascript" src="/static/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/chosen/chosen.jquery.min.js"></script>
+	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/static/index.js"></script>
+</head>
+
+<body>
+<div class="container">
+	<form id="datalove" method="post">
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<span class="brand">Plag<span>Enter</span></span>
+
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<li class="group">
+								<label for="directive">Ziel-Stelle in Directive</label>
+								<select data-placeholder="Stelle auswählen" id="directive" name="rel" class="combobox">
+									<option></option>
+									<% directives.forEach( function(directive){ %>
+									<option value="<%- directive.id %>"><%- directive.id %></option>
+									<% }); %>
+								</select>
+							</li>
+							<li class="group">
+								<label for="pagenr">Seiten-Nr.</label>
+								<input id="pagenr" name="page" type="number" class="span1" placeholder="Nr."/>
+							</li>
+							<li class="group">
+								<label class="control-label" for="doc">Änderungsanweisung aus Dokument</label>
+								<select data-placeholder="Dokument auswählen" id="doc" name="doc"
+										class="combobox span6">
+									<option></option>
+									<% docs.forEach( function(doc){ if (!doc.imported) { %>
+									<option value="<%- doc.uid %>"><%- doc.filename %></option>
+									<% }}); %>
+								</select>
+							</li>
+						</ul>
+					</div>
+					<!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+		<div id="head">
+			<div class="title group"></div>
+		</div>
+		<div id="middle">
+			<div id="left">
+				<div class="texthead">Alter Text</div>
+				<textarea id="txt_old" name="txtold" rows=10 cols=10></textarea>
+			</div><div id="right">
+				<div class="texthead">Neuer Text</div>
+				<textarea id="txt_new" name="txtnew" rows=10 cols=10></textarea>
+			</div>
+		</div>
+		<div id="foot">
+			<button type="submit" class="btn btn-primary">Speichern</button>
+			<div id="status" class="alert alert-info"></div>
+		</div>
+	</form>
+</div>
+</body>
+</html>
