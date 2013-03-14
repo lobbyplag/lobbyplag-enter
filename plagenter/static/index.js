@@ -17,6 +17,10 @@ function status(msg) {
 $(document).ready(function () {
 	$(".combobox").chosen({allow_single_deselect: true});
 
+	$(".clear-text").click(function () {
+		$(this).parent().parent().find("textarea").val('');
+	});
+
 	$("#datalove").submit(function (event) {
 		event.preventDefault();
 		var postdata = $(this).serialize();

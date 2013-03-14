@@ -7,6 +7,7 @@
 	<link type="text/css" href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link type="text/css" href="/static/index.css" rel="stylesheet">
 	<link type="text/css" href="/static/chosen/chosen.css" rel="stylesheet"/>
+	<link rel="shortcut icon" href="/static/favicon.ico?v=1"/>
 	<script type="text/javascript" src="/static/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/static/chosen/chosen.jquery.min.js"></script>
 	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
@@ -52,19 +53,24 @@
 				</div>
 			</div>
 		</div>
-		<div id="head">
+		<div class="head">
 			<div class="title group"></div>
 		</div>
-		<div id="middle">
-			<div id="left">
-				<div class="texthead">Alter Text</div>
+		<div class="middlehead">
+			<div class="left">
+				<div class="texthead">Text aus der Direktive <span class="clear-text pull-right" title="Textfeld leeren"></span></div>
+			</div><div class="right">
+				<div class="texthead">Text aus dem Proposal <span class="clear-text pull-right" title="Textfeld leeren"></span></div>
+			</div>
+		</div>
+		<div class="middle">
+			<div class="left">
 				<textarea id="txt_old" name="txtold" rows=10 cols=10></textarea>
-			</div><div id="right">
-				<div class="texthead">Neuer Text</div>
+			</div><div class="right">
 				<textarea id="txt_new" name="txtnew" rows=10 cols=10></textarea>
 			</div>
 		</div>
-		<div id="foot">
+		<div class="foot">
 			<button type="submit" class="btn btn-primary">Speichern</button>
 			<div id="status" class="alert alert-info"></div>
 		</div>
