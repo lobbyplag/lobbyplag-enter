@@ -16,7 +16,7 @@ modules for node js in path `plagenter/`
 
 ```` javascript
 config = {
-        dataPathSource: '../data/',	//path to documents.json & directive.json
+	dataPathSource: '../data/',	//path to documents.json & directive.json
 	dataPathDest: '../newdata/',	//path where to save the result fragment json files
 	port: 3000			//port for the server
 };
