@@ -95,6 +95,10 @@ textarea {
 	display: none;
 }
 
+.fetch-text {
+	margin-right: 12px;
+}
+
 .clear-text {
 	cursor: pointer;
 	margin-right: 12px;

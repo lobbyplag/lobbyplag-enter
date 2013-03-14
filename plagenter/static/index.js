@@ -17,8 +17,17 @@ function status(msg) {
 $(document).ready(function () {
 	$(".combobox").chosen({allow_single_deselect: true});
 
+	$(".fetch-text").click(function () {
+		var d = $("#directive").val();
+		$.get('/directive/', {id: d}, function (data) {
+			$("#txt_old").val(data);
+		});
+	});
+
+
 	$(".clear-text").click(function () {
-		$(this).parent().parent().find("textarea").val('');
+		var text_id = $(this).attr('for');
+		$("#" + text_id).val('');
 	});
 
 	$("#datalove").submit(function (event) {

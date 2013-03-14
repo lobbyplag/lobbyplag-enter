@@ -1,6 +1,7 @@
 var config = require('./config');
 var fs = require('fs');
 var express = require('express');
+var url = require('url');
 var app = express();
 var crypto = require('crypto');
 
@@ -16,7 +17,14 @@ function getDocByID(doc_uid) {
 	}
 	return null;
 }
-
+function getDirectivePartByID(id) {
+	for (var i = 0; i < data_directives.length; i++) {
+		if (data_directives[i].id === id) {
+			return data_directives[i];
+		}
+	}
+	return null;
+}
 // configure express
 app.configure(function () {
 	app.set('views', __dirname + '/views');
@@ -37,6 +45,17 @@ app.configure(function () {
 app.get('/', function (req, res) {
 	res.render('index', { docs: data_docs, directives: data_directives });
 });
+
+app.get('/directive/', function (req, res) {
+	var url_parts = url.parse(req.url, true),
+		query = url_parts.query;
+	if (!query.lang)
+		query.lang = 'de';
+	var d = getDirectivePartByID(query.id);
+	var text = (d ? d.text[query.lang] : '');
+	res.send(text);
+});
+
 
 app.post('/', function (req, res) {
 	//console.log('[Server] Epic win, somebody is working');
