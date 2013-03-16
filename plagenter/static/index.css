@@ -22,10 +22,6 @@ html {
 	color: red;
 }
 
-#pagenr {
-	height: 16px !important;
-}
-
 .head, .foot, .middle, .middlehead {
 	position: absolute;
 	width: 100%;
@@ -34,12 +30,14 @@ html {
 
 .middlehead {
 	top: 70px;
-	height: 20px;
+	height: 26px;
+	margin-left: 8px;
 }
 
 .middle {
-	top: 90px;
+	top: 98px;
 	bottom: 50px;
+	margin-left: 8px;
 }
 
 .head {
@@ -60,17 +58,14 @@ html {
 }
 
 .right {
-	width: 50%;
+	width: 49%;
 	height: 100%;
 	display: inline-block;
 }
 
 .texthead {
-	padding: 0px 8px 8px 8px;
-	width: 100%;
-	min-width: 50%;
-	height: 20px;
-	border-bottom: solid #dff0d8;
+	padding: 4px 8px 8px 8px;
+	float: left;
 }
 
 textarea {
@@ -95,19 +90,10 @@ textarea {
 	display: none;
 }
 
-.fetch-text {
-	margin-right: 12px;
+#langs_chzn, #langs_chzn .chzn-single {
+	height: 24px !important;
 }
 
-.clear-text {
-	cursor: pointer;
-	margin-right: 12px;
-	margin-top: 4px;
-	width: 12px;
-	height: 12px;
-	font-size: 1px;
-	background: url('chosen/chosen-sprite.png') -42px 1px no-repeat;
-}
-.clear-text:hover {
-	background-position: -42px -10px;
+.btn-custom {
+	height: 26px !important;
 }

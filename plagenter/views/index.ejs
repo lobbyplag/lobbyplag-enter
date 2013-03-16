@@ -4,11 +4,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>PlagEnter</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<link type="text/css" href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link type="text/css" href="/static/index.css" rel="stylesheet">
 	<link type="text/css" href="/static/chosen/chosen.css" rel="stylesheet"/>
+	<link type="text/css" href="/static/jquery-range/range.css" rel="stylesheet"/>
+
 	<link rel="shortcut icon" href="/static/favicon.ico?v=1"/>
+
 	<script type="text/javascript" src="/static/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/jquery-range/rangeinput.js"></script>
 	<script type="text/javascript" src="/static/chosen/chosen.jquery.min.js"></script>
 	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/static/index.js"></script>
@@ -26,26 +31,33 @@
 						<ul class="nav">
 							<li class="group">
 								<label for="directive">Ziel-Stelle in Directive</label>
-								<select data-placeholder="Stelle auswählen" id="directive" name="rel" class="combobox">
+								<select data-placeholder="Stelle auswählen" id="directive" name="rel"
+										class="combobox span2">
 									<option></option>
-									<% directives.forEach( function(directive){ %>
-									<option value="<%- directive.id %>"><%- directive.id %></option>
+									<% data.directive.data.forEach( function(d){ %>
+									<option value="<%= d.id %>"><%= d.id %></option>
 									<% }); %>
 								</select>
-							</li>
-							<li class="group">
-								<label for="pagenr">Seiten-Nr.</label>
-								<input id="pagenr" name="page" type="number" class="span1" placeholder="Nr."/>
 							</li>
 							<li class="group">
 								<label class="control-label" for="doc">Änderungsanweisung aus Dokument</label>
 								<select data-placeholder="Dokument auswählen" id="doc" name="doc"
 										class="combobox span6">
 									<option></option>
-									<% docs.forEach( function(doc){ if (!doc.imported) { %>
-									<option value="<%- doc.uid %>"><%- doc.filename %></option>
-									<% }}); %>
+									<% data.lobbyistsDocs.forEach( function(entry){%>
+									<optgroup label="<%= entry.lobbyist %>">
+										<% entry.docs.forEach( function(doc){%>
+										<option value="<%= doc.uid %>" pages="<%= doc.data.pages %>"
+												lang="<%= doc.lang %>"><%= doc.filename %>
+										</option>
+										<% }); %>
+									</optgroup>
+									<% }); %>
 								</select>
+							</li>
+							<li class="group">
+								<label for="pagenr">Seiten-Nr.</label>
+								<input id="pagenr" type="range" name="page" min="0" value="0" placeholder="Nr."/>
 							</li>
 						</ul>
 					</div>
@@ -58,10 +70,23 @@
 		</div>
 		<div class="middlehead">
 			<div class="left">
-				<div class="texthead">Text aus der Direktive <span class="clear-text pull-right" for="txt_old" title="Textfeld leeren"></span>
-					<i class="icon-download fetch-text pull-right" title="Text aus Direktive holen"></i> </div>
+					<span class="texthead">Text aus der Direktive</span>
+					<div class="pull-right">
+						<button class="btn btn-custom fetch-text" title="Text aus Direktive holen"><i class="icon-download"></i></button>
+						<button class="btn btn-custom clear-text" for="txt_old" title="Textfeld leeren"><i class="icon-remove"></i></button>
+					</div>
+					<div class="pull-right">
+						<select data-placeholder="Sprache" id="langs" class="span2">
+							<% for (var key in data.languages.data) { %>
+							<option value="<%= key %>"><%= data.languages.data[key] %></option>
+							<% } %>
+						</select>
+					</div>
 			</div><div class="right">
-				<div class="texthead">Text aus dem Proposal <span class="clear-text pull-right" for="txt_new" title="Textfeld leeren"></span></div>
+				<span class="texthead">Text aus der Proposal</span>
+				<div class="pull-right">
+					<button class="btn btn-custom clear-text" for="txt_new" title="Textfeld leeren"><i class="icon-remove"></i></button>
+				</div>
 			</div>
 		</div>
 		<div class="middle">

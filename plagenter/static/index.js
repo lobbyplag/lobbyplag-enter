@@ -15,19 +15,40 @@ function status(msg) {
 }
 
 $(document).ready(function () {
-	$(".combobox").chosen({allow_single_deselect: true});
+
+	$("#directive").chosen({allow_single_deselect: true});
+
+	$("#langs").chosen();
+
+	$("#doc").chosen({allow_single_deselect: true}).change(function () {
+		var selected = $('#doc').find(":selected");
+		var lang = selected.attr('lang');
+		var langs = $("#langs");
+		langs.val(lang);
+		langs.trigger("liszt:updated");
+		var pages = selected.attr('pages');
+		var max = isNaN(pages) ? 1 : parseInt(pages);
+		$(":range").data("rangeinput").setMax(max);
+	});
+
+	$(":range").rangeinput({precision: 0, keyboard: true, max: 1});
+
 
 	$(".fetch-text").click(function () {
 		var d = $("#directive").val();
-		$.get('/directive/', {id: d}, function (data) {
-			$("#txt_old").val(data);
-		});
+		var lang = $("#langs").val();
+		if (d) {
+			$.get('/directive/', {id: d, lang:lang}, function (data) {
+				$("#txt_old").val(data);
+			});
+		}
+		return false;
 	});
-
 
 	$(".clear-text").click(function () {
 		var text_id = $(this).attr('for');
 		$("#" + text_id).val('');
+		return false;
 	});
 
 	$("#datalove").submit(function (event) {
@@ -36,7 +57,7 @@ $(document).ready(function () {
 		var posting = $.post('/', postdata);
 		posting.done(function (data) {
 			if (data.indexOf('OK') !== 0)
-				error(data)
+				error(data);
 			else
 				status(data);
 		}).fail(function () {

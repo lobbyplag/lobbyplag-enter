@@ -2,7 +2,7 @@
 
 A small tool for manual entering data for the [LobbyPlag](http://www.lobbyplag.eu/) project.
 
-Needed Data: `directive.json` and `documents.json`
+Needed Data: `directive.json`, `documents.json`, `lobbyists.json` and `lang.json`
 
 ##Requirements
 

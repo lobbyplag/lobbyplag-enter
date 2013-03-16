@@ -6,26 +6,76 @@ var url = require('url');
 var app = express();
 var crypto = require('crypto');
 
-//base data
-var data_docs;
-var data_directives;
+function getByID(array, propertyname, id) {
+	for (var i = 0; i < array.length; i++) {
+		if (array[i][propertyname] === id) {
+			return array[i];
+		}
+	}
+	return null;
+}
 
-function getDocByID(doc_uid) {
-	for (var i = 0; i < data_docs.length; i++) {
-		if (data_docs[i].uid === doc_uid) {
-			return data_docs[i];
+//base data
+function Data() {
+	var me = this;
+	me.directive = {data: [], filename: 'directive.json'};
+	me.docs = {data:[], filename: 'documents.json'};
+	me.lobbyists = {data: [], filename: 'lobbyists.json'};
+	me.languages = {data: {} , filename: 'lang.json'}; //obj not array
+	me.lobbyistsDocs = [];
+	me.getDocByID = function (id) {
+		return getByID(me.docs.data, 'uid', id);
+	};
+	me.getDirectivePartByID = function (id) {
+		return getByID(me.directive.data, 'id', id);
+	};
+	me.getLobbyistByID = function (id) {
+		return getByID(me.lobbyists.data, 'id', id);
+	};
+
+	me.prepareLobbyistDocs = function () {
+		var collect = {};
+		me.docs.data.forEach(function (doc) {
+			if (!doc.imported) {
+				var list = collect[doc.lobbyist_full.title];
+				if (!list) {
+					list = [];
+					collect[doc.lobbyist_full.title] = list;
+				}
+				list.push(doc);
+			}
+		});
+		var result = [];
+		for (var key in collect) {
+			result.push(
+				{lobbyist: key, docs: collect[key]}
+			);
 		}
-	}
-	return null;
+		me.lobbyistsDocs = result;
+		me.lobbyistsDocs.sort(function (a, b) {
+			var al = a.lobbyist.toLowerCase();
+			var bl = b.lobbyist.toLowerCase();
+			if (al > bl)
+				return 1;
+			if (al < bl)
+				return -1;
+			return 0;
+		});
+	};
+
+	me.connectLobbyists = function () {
+		me.docs.data.forEach(function (doc) {
+			doc.lobbyist_full = me.getLobbyistByID(doc.lobbyist);
+			if (!doc.lobbyist_full) {
+				doc.lobbyist_full = {title: 'Unknown'};
+			}
+		});
+	};
 }
-function getDirectivePartByID(id) {
-	for (var i = 0; i < data_directives.length; i++) {
-		if (data_directives[i].id === id) {
-			return data_directives[i];
-		}
-	}
-	return null;
-}
+
+var
+	data = new Data();
+
 // configure express
 app.configure(function () {
 	app.set('views', __dirname + '/views');
@@ -44,7 +94,7 @@ app.configure(function () {
 });
 
 app.get('/', function (req, res) {
-	res.render('index', { docs: data_docs, directives: data_directives });
+	res.render('index', { data: data });
 });
 
 app.get('/directive/', function (req, res) {
@@ -52,7 +102,7 @@ app.get('/directive/', function (req, res) {
 		query = url_parts.query;
 	if (!query.lang)
 		query.lang = 'de';
-	var d = getDirectivePartByID(query.id);
+	var d = data.getDirectivePartByID(query.id);
 	var text = (d ? d.text[query.lang] : '');
 	res.send(text);
 });
@@ -76,7 +126,7 @@ app.post('/', function (req, res) {
 		res.send('Bitte die Stelle in der Direktive auswählen');
 		return;
 	}
-	var doc = getDocByID(req.body.doc);
+	var doc = data.getDocByID(req.body.doc);
 	if (!doc) {
 		res.send('Das Quell-Dokument ist leider unbekannt, bitte neu auswählen');
 		return;
@@ -84,8 +134,8 @@ app.post('/', function (req, res) {
 	var shasum = crypto.createHash('sha1');
 	shasum.update(req.body.rel + req.body.page + req.body.doc + req.body.txtold + req.body.txtnew);
 	var id = shasum.digest('hex');
-	var data = {doc: doc.filename, doc_uid: req.body.doc, page: req.body.page, relations: [req.body.rel], text: {old: req.body.txtold, new: req.body.txtnew }, uid: id  };
-	fs.writeFile(config.dataPathDest + id + '.json', JSON.stringify(data, null, '\t'), function (err) {
+	var newdata = {doc: doc.filename, doc_uid: req.body.doc, page: req.body.page, relations: [req.body.rel], text: {old: req.body.txtold, new: req.body.txtnew }, uid: id  };
+	fs.writeFile(config.dataPathDest + id + '.json', JSON.stringify(newdata, null, '\t'), function (err) {
 		if (err) {
 			console.log('error saving ' + id + '.json: ' + err);
 			res.send('Beim Speichern ist ein Fehler aufgetreten, bitte nochmal versuchen');
@@ -96,21 +146,26 @@ app.post('/', function (req, res) {
 	});
 });
 
-function loadData(filename, callback) {
+function loadData(doc, callback) {
+	var filename = config.dataPathSource + doc.filename;
 	fs.exists(filename, function (exists) {
 		if (exists) {
-			fs.readFile(filename, function (err, data) {
-				callback(JSON.parse(data));
+			fs.readFile(filename, function (err, filedata) {
+				console.log(filename + ' loaded');
+				doc.data = JSON.parse(filedata);
+				callback(true);
 			});
 		} else {
 			fs.exists(path.resolve(__dirname, filename), function (exists) {
 				if (exists) {
 					fs.readFile(path.resolve(__dirname, filename), function (err, data) {
-						callback(JSON.parse(data));
+						console.log(filename + ' loaded');
+						doc.data = JSON.parse(filedata);
+						callback(true);
 					});
-				} else {			
+				} else {
 					console.log('"' + filename + '" could not be loaded, please check config.js for the right paths');
-					callback();
+					callback(false);
 				}
 			});
 		}
@@ -118,20 +173,27 @@ function loadData(filename, callback) {
 }
 
 function init(cb) {
-	loadData(config.dataPathSource + 'documents.json', function (data) {
-		if (data) {
-			data_docs = data;
-			console.log('documents.json loaded');
-			loadData(config.dataPathSource + 'directive.json', function (data) {
-				if (data) {
-					data_directives = data;
-					console.log('directive.json loaded');
-					cb();
+	loadData(data.languages, function (success) {
+		if (success) {
+			loadData(data.directive, function (success) {
+				if (success) {
+					loadData(data.docs, function (success) {
+						if (success) {
+							loadData(data.lobbyists, function (success) {
+								if (success) {
+									data.connectLobbyists();
+									data.prepareLobbyistDocs();
+									cb();
+								}
+							});
+						}
+					});
 				}
 			});
 		}
 	});
 }
+
 
 init(function () {
 	app.listen(config.port);
