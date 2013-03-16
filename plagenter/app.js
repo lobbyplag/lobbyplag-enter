@@ -1,5 +1,6 @@
 var config = require('./config');
 var fs = require('fs');
+var path = require('path');
 var express = require('express');
 var url = require('url');
 var app = express();
@@ -102,8 +103,16 @@ function loadData(filename, callback) {
 				callback(JSON.parse(data));
 			});
 		} else {
-			console.log('"' + filename + '" could not be loaded, please check config.js for the right paths');
-			callback();
+			fs.exists(path.resolve(__dirname, filename), function (exists) {
+				if (exists) {
+					fs.readFile(path.resolve(__dirname, filename), function (err, data) {
+						callback(JSON.parse(data));
+					});
+				} else {			
+					console.log('"' + filename + '" could not be loaded, please check config.js for the right paths');
+					callback();
+				}
+			});
 		}
 	});
 }
