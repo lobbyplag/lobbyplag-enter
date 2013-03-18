@@ -20,27 +20,17 @@
 </head>
 
 <body>
+<button class="btn help"><i class="icon-question-sign"></i></button>
 <div class="container">
 	<form id="datalove" method="post">
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
 					<span class="brand">Plag<span>Enter</span></span>
-
 					<div class="nav-collapse collapse">
 						<ul class="nav">
 							<li class="group">
-								<label for="directive">Ziel-Stelle in Direktive</label>
-								<select data-placeholder="Stelle auswählen" id="directive" name="rel"
-										class="combobox span2">
-									<option></option>
-									<% data.directive.data.forEach( function(d){ %>
-									<option value="<%= d.id %>"><%= d.id %></option>
-									<% }); %>
-								</select>
-							</li>
-							<li class="group">
-								<label class="control-label" for="doc">Änderungsanweisung aus Dokument</label>
+								<label class="control-label" for="doc">Dokument mit Änderungsvorschlägen</label>
 								<select data-placeholder="Dokument auswählen" id="doc" name="doc"
 										class="combobox span6">
 									<option></option>
@@ -59,31 +49,54 @@
 								<label for="pagenr">Seiten-Nr.</label>
 								<input id="pagenr" type="range" name="page" min="0" value="0" placeholder="Nr."/>
 							</li>
+							<br />
+							<li class="group">
+								<label for="directive">Absatz in Direktive <a href="#" class="hint" rel="popover" data-content="Angabe auf welchen Absatz (Kapitel, Unterkapitel, etc.) sich die Änderungsvorschläge beziehen."
+															   data-original-title="Absatz in Direktive"><i class="icon-question-sign"></i></a>
+								</label>
+								<select data-placeholder="Absatz auswählen" id="directive" name="rel"
+										class="combobox span3">
+									<option></option>
+									<% data.directive.data.forEach( function(d){ %>
+									<option value="<%= d.id %>"><%= d.id %></option>
+									<% }); %>
+								</select>
+							</li>
+							<li class="group">
+								<label for="where">Position <a href="#" class="hint" rel="popover" data-content="Angabe wenn Änderungen z.B. vor/nach Absätzen der Direktive vollzogen werden sollen."
+																data-original-title="Position der Änderungen"><i class="icon-question-sign"></i></a>
+								</label>
+								<select data-placeholder="Stelle auswählen" id="where" name="where" class="combobox span2">
+									<option value="direct">Absatz genau</option>
+									<option value="before">Absatz davor</option>
+									<option value="after">Absatz danach</option>
+									<option value="unknown">Unbekannt</option>
+								</select>
+							</li>
 						</ul>
 					</div>
 					<!--/.nav-collapse -->
 				</div>
 			</div>
 		</div>
-		<div class="head">
-			<div class="title group"></div>
-		</div>
 		<div class="middlehead">
 			<div class="left">
-					<span class="texthead">Text aus der Direktive</span>
+					<span class="texthead">Text aus der Direktive <a href="#" class="hint" rel="popover" data-content="Hier den Direktive-Text einfügen wie ihn das Proposal angibt."
+																	 data-original-title="Text aus der Direktive"><i class="icon-question-sign"></i></a></span>
 					<div class="pull-right">
-						<button class="btn btn-custom fetch-text" title="Text aus Direktive holen"><i class="icon-download"></i></button>
+						<button class="btn btn-custom fetch-text" title="Absatz aus Direktive holen"><i class="icon-download"></i></button>
 						<button class="btn btn-custom clear-text" for="txt_old" title="Textfeld leeren"><i class="icon-remove"></i></button>
 					</div>
 					<div class="pull-right">
-						<select data-placeholder="Sprache" id="langs" class="span2">
+						<select data-placeholder="Sprache" id="langs" class="span2" title="Sprache des Textes aus der Direktive">
 							<% for (var key in data.languages.data) { %>
 							<option value="<%= key %>"><%= data.languages.data[key] %></option>
 							<% } %>
 						</select>
 					</div>
 			</div><div class="right">
-				<span class="texthead">Text aus der Proposal</span>
+				<span class="texthead">Text aus dem Proposal <a href="#" class="hint" rel="popover" data-content="Hier den Text einfügen wie ihn das Proposal als Änderungsvorschlag angibt.  Bitte leer lassen, wenn der Vorschlag den Direktive-Text streicht."
+																data-original-title="Text aus dem Proposal"><i class="icon-question-sign"></i></a></span>
 				<div class="pull-right">
 					<button class="btn btn-custom clear-text" for="txt_new" title="Textfeld leeren"><i class="icon-remove"></i></button>
 				</div>

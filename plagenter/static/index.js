@@ -19,6 +19,9 @@ $(document).ready(function () {
 	$("#directive").chosen({allow_single_deselect: true});
 
 	$("#langs").chosen();
+	$("#where").chosen({disable_search: true});
+
+	$(".hint").popover({placement: 'bottom', trigger: 'hover'});
 
 	$("#doc").chosen({allow_single_deselect: true}).change(function () {
 		var selected = $('#doc').find(":selected");
@@ -26,6 +29,8 @@ $(document).ready(function () {
 		var langs = $("#langs");
 		langs.val(lang);
 		langs.trigger("liszt:updated");
+		$('#txt_old').attr('lang', lang);
+		$('#txt_new').attr('lang', lang);
 		var pages = selected.attr('pages');
 		var max = isNaN(pages) ? 1 : parseInt(pages);
 		$(":range").data("rangeinput").setMax(max);
@@ -33,14 +38,15 @@ $(document).ready(function () {
 
 	$(":range").rangeinput({precision: 0, keyboard: true, max: 1});
 
-
 	$(".fetch-text").click(function () {
 		var d = $("#directive").val();
 		var lang = $("#langs").val();
 		if (d) {
-			$.get('/directive/', {id: d, lang:lang}, function (data) {
+			$.get('/directive/', {id: d, lang: lang}, function (data) {
 				$("#txt_old").val(data);
 			});
+		} else {
+			alert('Bitte zuerst den Absatz der Direktive auswählen.')
 		}
 		return false;
 	});

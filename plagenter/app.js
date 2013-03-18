@@ -19,9 +19,9 @@ function getByID(array, propertyname, id) {
 function Data() {
 	var me = this;
 	me.directive = {data: [], filename: 'directive.json'};
-	me.docs = {data:[], filename: 'documents.json'};
+	me.docs = {data: [], filename: 'documents.json'};
 	me.lobbyists = {data: [], filename: 'lobbyists.json'};
-	me.languages = {data: {} , filename: 'lang.json'}; //obj not array
+	me.languages = {data: {}, filename: 'lang.json'}; //obj not array
 	me.lobbyistsDocs = [];
 	me.getDocByID = function (id) {
 		return getByID(me.docs.data, 'uid', id);
@@ -134,7 +134,7 @@ app.post('/', function (req, res) {
 	var shasum = crypto.createHash('sha1');
 	shasum.update(req.body.rel + req.body.page + req.body.doc + req.body.txtold + req.body.txtnew);
 	var id = shasum.digest('hex');
-	var newdata = {doc: doc.filename, doc_uid: req.body.doc, page: req.body.page, relations: [req.body.rel], text: {old: req.body.txtold, new: req.body.txtnew }, uid: id  };
+	var newdata = {doc: doc.filename, doc_uid: req.body.doc, page: req.body.page, relations: [req.body.rel], relationwhere: req.body.where, text: {old: req.body.txtold, new: req.body.txtnew }, uid: id  };
 	fs.writeFile(config.dataPathDest + id + '.json', JSON.stringify(newdata, null, '\t'), function (err) {
 		if (err) {
 			console.log('error saving ' + id + '.json: ' + err);
