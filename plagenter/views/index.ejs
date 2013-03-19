@@ -55,10 +55,10 @@
 															   data-original-title="Absatz in Direktive"><i class="icon-question-sign"></i></a>
 								</label>
 								<select data-placeholder="Absatz auswählen" id="directive" name="rel"
-										class="combobox span3">
+										class="combobox span6">
 									<option></option>
 									<% data.directive.data.forEach( function(d){ %>
-									<option value="<%= d.id %>"><%= d.id %></option>
+									<option value="<%= d.id %>"><%= d.id.expand() %></option>
 									<% }); %>
 								</select>
 							</li>

@@ -15,6 +15,21 @@ function getByID(array, propertyname, id) {
 	return null;
 }
 
+String.prototype.expand = function() {
+	return this.toString().replace(/([hrcaspit])/g, function(l){
+		switch (l) {
+			case "h": return "|Title "; break;
+			case "r": return "|Recital "; break;
+			case "c": return "|Chapter "; break;
+			case "s": return "|Section "; break;
+			case "a": return "|Article "; break;
+			case "p": return "|Paragraph "; break;
+			case "i": return "|Point "; break;
+			case "t": return "|Text "; break;
+		}
+	}).replace(/^\|/,'').split(/\|/g).join(" – ");
+};
+
 //base data
 function Data() {
 	var me = this;
