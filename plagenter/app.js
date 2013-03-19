@@ -135,41 +135,38 @@ app.post('/', function (req, res) {
 	shasum.update(req.body.rel + req.body.page + req.body.doc + req.body.txtold + req.body.txtnew);
 	var id = shasum.digest('hex');
 	var newdata = {doc: doc.filename, doc_uid: req.body.doc, page: req.body.page, relations: [req.body.rel], relationwhere: req.body.where, text: {old: req.body.txtold, new: req.body.txtnew }, uid: id  };
-	fs.writeFile(config.dataPathDest + id + '.json', JSON.stringify(newdata, null, '\t'), function (err) {
+	var filename = path.resolve(__dirname, config.dataPathDest + id + '.json');
+	fs.writeFile(filename, JSON.stringify(newdata, null, '\t'), function (err) {
 		if (err) {
-			console.log('error saving ' + id + '.json: ' + err);
+			console.log('error saving ' + filename + ' : ' + err);
 			res.send('Beim Speichern ist ein Fehler aufgetreten, bitte nochmal versuchen');
 		} else {
-			console.log(id + '.json saved');
+			console.log(filename + ' saved');
 			res.send('OK, gespeichert. Danke sehr!');
 		}
 	});
 });
 
 function loadData(doc, callback) {
-	var filename = config.dataPathSource + doc.filename;
+	var filename = path.resolve(__dirname, config.dataPathSource + doc.filename);
 	fs.exists(filename, function (exists) {
-		if (exists) {
-			fs.readFile(filename, function (err, filedata) {
-				console.log(filename + ' loaded');
-				doc.data = JSON.parse(filedata);
-				callback(true);
-			});
-		} else {
-			fs.exists(path.resolve(__dirname, filename), function (exists) {
-				if (exists) {
-					fs.readFile(path.resolve(__dirname, filename), function (err, data) {
+			if (exists) {
+				fs.readFile(filename, function (err, filedata) {
+					if (err) {
+						console.log('error loading "' + filename + '"');
+						callback(false);
+					} else {
 						console.log(filename + ' loaded');
 						doc.data = JSON.parse(filedata);
 						callback(true);
-					});
-				} else {
-					console.log('"' + filename + '" could not be loaded, please check config.js for the right paths');
-					callback(false);
-				}
-			});
+					}
+				});
+			} else {
+				console.log('"' + filename + '" could not be loaded, please check config.js for the right paths');
+				callback(false);
+			}
 		}
-	});
+	);
 }
 
 function init(cb) {
