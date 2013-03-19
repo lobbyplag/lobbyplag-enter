@@ -142,7 +142,7 @@ app.post('/', function (req, res) {
 			res.send('Beim Speichern ist ein Fehler aufgetreten, bitte nochmal versuchen');
 		} else {
 			console.log(filename + ' saved');
-			res.send('OK, gespeichert. Danke sehr!');
+			res.send('OK, gespeichert. Danke sehr! '+ (new Date()).toTimeString());
 		}
 	});
 });
