@@ -22,7 +22,7 @@ html {
 	color: red;
 }
 
-.head, .foot, .middle, .middlehead {
+.head, .foot, .middle, .bottom, .middlehead, .splitter {
 	position: absolute;
 	width: 100%;
 	left: 0;
@@ -36,8 +36,36 @@ html {
 
 .middle {
 	top: 168px;
-	bottom: 50px;
+	height: 200px;
 	margin-left: 8px;
+}
+
+.splitter {
+	top: 370px;
+	height: 4px;
+	width: 100%;
+	border: 1px solid #C3D3DA;
+	background-color: red;
+	cursor: n-resize;
+}
+
+.bottom {
+	top: 378px;
+	bottom: 60px;
+	border: 1px solid #C3D3DA;
+	width: 99%;
+	margin-left: 8px;
+	margin-right: 8px;
+	text-align: center;
+}
+
+#pdf {
+	height: 100%;
+	width: 100%;
+	border: 1px solid #C3D3DA;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
 }
 
 .head {

@@ -23,10 +23,30 @@ $(document).ready(function () {
 
 	$(".hint").popover({placement: 'bottom', trigger: 'hover'});
 
+	$("#doclink").click(function () {
+		var url = $(this).attr('url');
+		$("#pdf").attr('src', url);
+		$("#pdf").show();
+		$(this).hide();
+		return false;
+	})
+
 	$("#doc").chosen({allow_single_deselect: true}).change(function () {
 		var selected = $('#doc').find(":selected");
+		var filename = selected.attr('filename');
 		var lang = selected.attr('lang');
 		var langs = $("#langs");
+
+		$("#pdf").attr('src', 'about:blank');
+		$("#pdf").hide();
+		var url = 'https://docs.google.com/gview?url=https://github.com/lobbyplag/lobbyplag-data/raw/master/raw/lobby-documents/' +
+			filename
+			+ '&embedded=true';
+		var link = $("#doclink");
+		link.html("Dokument <b>" + filename + "</b> mit Google Docs öffnen");
+		link.attr('url', url);
+		link.show();
+
 		langs.val(lang);
 		langs.trigger("liszt:updated");
 		$('#txt_old').attr('lang', lang);

@@ -9,7 +9,6 @@
 	<link type="text/css" href="/static/index.css" rel="stylesheet">
 	<link type="text/css" href="/static/chosen/chosen.css" rel="stylesheet"/>
 	<link type="text/css" href="/static/jquery-range/range.css" rel="stylesheet"/>
-
 	<link rel="shortcut icon" href="/static/favicon.ico?v=1"/>
 
 	<script type="text/javascript" src="/static/jquery/jquery.min.js"></script>
@@ -38,7 +37,7 @@
 									<optgroup label="<%= entry.lobbyist %>">
 										<% entry.docs.forEach( function(doc){%>
 										<option value="<%= doc.uid %>" pages="<%= doc.data.pages %>"
-												lang="<%= doc.lang %>"><%= doc.filename %>
+												filename="<%- doc.filename %>" lang="<%= doc.lang %>"><%= doc.filename %>
 										</option>
 										<% }); %>
 									</optgroup>
@@ -107,6 +106,10 @@
 			</div><div class="right">
 				<textarea id="txt_new" name="txtnew" rows=10 cols=10></textarea>
 			</div>
+		</div>
+		<div id="bottom" class="bottom">
+			<a href="#" class="btn" id="doclink" style="display:none"></a>
+			<iframe id="pdf" src="about:blank" frameborder="0" style="display:none"></iframe>
 		</div>
 		<div class="foot">
 			<button type="submit" class="btn btn-primary">Speichern</button>
