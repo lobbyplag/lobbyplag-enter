@@ -14,7 +14,7 @@ html {
 }
 
 .group {
-	padding-top: 6px;
+	padding-top: 12px;
 	padding-right: 8px;
 }
 
@@ -24,48 +24,51 @@ html {
 
 .head, .foot, .middle, .bottom, .middlehead, .splitter {
 	position: absolute;
-	width: 100%;
-	left: 0;
+	width: 98%;
+	left: 10px;
+}
+.bottom {
+	position: absolute;
+	left: 20px;
+	width: 97%;
 }
 
 .middlehead {
-	top: 140px;
-	height: 26px;
+	top: 74px;
+	height: 34px;
 	margin-left: 8px;
 }
 
 .middle {
-	top: 168px;
+	top: 108px;
 	height: 200px;
 	margin-left: 8px;
 }
 
-.splitter {
-	top: 370px;
-	height: 4px;
-	width: 100%;
-	border: 1px solid #C3D3DA;
-	background-color: red;
-	cursor: n-resize;
-}
-
 .bottom {
-	top: 378px;
+	top: 316px;
 	bottom: 60px;
 	border: 1px solid #C3D3DA;
-	width: 99%;
-	margin-left: 8px;
-	margin-right: 8px;
 	text-align: center;
+}
+
+.popover {
+	border: 0 !important;
+}
+
+.popover-title {
+	border: 1px solid #C3D3DA;
+}
+
+.popover-content {
+	border: 1px solid #C3D3DA;
+	background-color: white;
 }
 
 #pdf {
 	height: 100%;
-	width: 100%;
-	border: 1px solid #C3D3DA;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
+	width: 99%;
+	left: 10px;
 }
 
 .head {
@@ -75,8 +78,15 @@ html {
 }
 
 .foot {
-	height: 50px;
+	height: 60px;
 	bottom: 0;
+}
+
+.border {
+	border: 1px solid #C3D3DA;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
 }
 
 .left {
@@ -91,7 +101,18 @@ html {
 	display: inline-block;
 }
 
+.texttools {
+	height: 40px;
+	background-color: #ededed;
+}
+
+.textbuttons {
+	margin-top: 2px !important;
+	margin-right: 2px !important;
+}
+
 .texthead {
+	margin-top: 3px;
 	padding: 4px 8px 8px 8px;
 	float: left;
 }
@@ -112,6 +133,10 @@ textarea {
 	float: left;
 }
 
+.bottom .btn {
+	margin-top: 8px;
+}
+
 #status {
 	float: left;
 	margin: 8px;
@@ -119,9 +144,16 @@ textarea {
 }
 
 #langs_chzn, #langs_chzn .chzn-single {
-	height: 24px !important;
+	height: 26px !important;
+}
+
+.combocontainer {
+	float: left;
+	height: 28px !important;
 }
 
 .btn-custom {
-	height: 26px !important;
+	height: 28px !important;
+	float: left;
+	margin-top: 0;
 }

@@ -9,6 +9,12 @@
  * Since: Mar 2010
  * Date: @DATE
  *
+ * CHANGED: Added set max method Mar 25 2013 ffalt
+ *
+ * added key "enter" setvalue & validation
+ * key handling on handle
+ * set focus on handle-click
+ *
  * CHANGED: Added set max method Mar 16 2013 ffalt
  *
  $.extend(self, {
@@ -293,11 +299,13 @@
 		
 		$.extend(self, {
 
+			//ffalt start
 			setMax: function(val) {
 				conf.max = parseFloat(val);
 				range = conf.max - conf.min;
 				self.setValue(value > conf.max ? conf.max : value, $.Event("click"));
 			},
+			//ffalt end
 
 			getValue: function() {
 				return value;	
@@ -380,7 +388,10 @@
 			}
 			
 		}).click(function(e) {
-			return e.preventDefault();	 
+				//ffalt start
+				handle.focus();
+				//ffalt end
+				return e.preventDefault();
 		});		
 		
 		// clicking
@@ -394,7 +405,28 @@
 		});
 
 		if (conf.keyboard) {
-			
+
+			//ffalt start
+			handle.keydown(function(e) {
+				if (input.attr("readonly")) { return; }
+				var key = e.keyCode,
+					up = $([75, 76, 38, 33, 39]).index(key) != -1,
+					down = $([74, 72, 40, 34, 37]).index(key) != -1;
+				if ((up || down) && !(e.shiftKey || e.altKey || e.ctrlKey)) {
+
+					// UP: 	k=75, l=76, up=38, pageup=33, right=39
+					if (up) {
+						self.step(key == 33 ? 10 : 1, e);
+
+						// DOWN:	j=74, h=72, down=40, pagedown=34, left=37
+					} else if (down) {
+						self.step(key == 34 ? -10 : -1, e);
+					}
+					return e.preventDefault();
+				}
+			});
+			//ffalt end
+
 			input.keydown(function(e) {
 		
 				if (input.attr("readonly")) { return; }
@@ -402,7 +434,17 @@
 				var key = e.keyCode,
 					 up = $([75, 76, 38, 33, 39]).index(key) != -1,
 					 down = $([74, 72, 40, 34, 37]).index(key) != -1;					 
-					 
+
+				//ffalt start
+				if ((key===13) && !(e.shiftKey || e.altKey || e.ctrlKey)) {
+					var val = $(this).val();
+					if (val !== value) {
+						self.setValue(val, e);
+					}
+					return e.preventDefault();
+				}
+				//ffalt end
+
 				if ((up || down) && !(e.shiftKey || e.altKey || e.ctrlKey)) {
 				
 					// UP: 	k=75, l=76, up=38, pageup=33, right=39			

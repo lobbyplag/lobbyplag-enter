@@ -15,19 +15,35 @@ function getByID(array, propertyname, id) {
 	return null;
 }
 
-String.prototype.expand = function() {
-	return this.toString().replace(/([hrcaspit])/g, function(l){
+String.prototype.expand = function () {
+	return this.toString().replace(/([hrcaspit])/g,function (l) {
 		switch (l) {
-			case "h": return "|Title "; break;
-			case "r": return "|Recital "; break;
-			case "c": return "|Chapter "; break;
-			case "s": return "|Section "; break;
-			case "a": return "|Article "; break;
-			case "p": return "|Paragraph "; break;
-			case "i": return "|Point "; break;
-			case "t": return "|Text "; break;
+			case "h":
+				return "|Title ";
+				break;
+			case "r":
+				return "|Recital ";
+				break;
+			case "c":
+				return "|Chapter ";
+				break;
+			case "s":
+				return "|Section ";
+				break;
+			case "a":
+				return "|Article ";
+				break;
+			case "p":
+				return "|Paragraph ";
+				break;
+			case "i":
+				return "|Point ";
+				break;
+			case "t":
+				return "|Text ";
+				break;
 		}
-	}).replace(/^\|/,'').split(/\|/g).join(" – ");
+	}).replace(/^\|/, '').split(/\|/g).join(" – ");
 };
 
 //base data
@@ -62,9 +78,11 @@ function Data() {
 		});
 		var result = [];
 		for (var key in collect) {
-			result.push(
-				{lobbyist: key, docs: collect[key]}
-			);
+			if (collect.hasOwnProperty(key)) {
+				result.push(
+					{lobbyist: key, docs: collect[key]}
+				);
+			}
 		}
 		me.lobbyistsDocs = result;
 		me.lobbyistsDocs.sort(function (a, b) {
@@ -92,7 +110,7 @@ var
 	data = new Data();
 
 // configure express
-app.configure(function () {
+app.configure('all', function () {
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'ejs');
 	app.use(express.favicon(__dirname + '/static/favicon.ico'));
@@ -149,7 +167,15 @@ app.post('/', function (req, res) {
 	var shasum = crypto.createHash('sha1');
 	shasum.update(req.body.rel + req.body.page + req.body.doc + req.body.txtold + req.body.txtnew);
 	var id = shasum.digest('hex');
-	var newdata = {doc: doc.filename, doc_uid: req.body.doc, page: req.body.page, relations: [req.body.rel], relationwhere: req.body.where, text: {old: req.body.txtold, new: req.body.txtnew }, uid: id  };
+	var newdata = {
+		doc: doc.filename,
+		doc_uid: req.body.doc,
+		page: req.body.page,
+		relations: [req.body.rel],
+		relationwhere: req.body.where,
+		comment: (req.body.what === 'comment'),
+		text: {old: req.body.txtold, new: req.body.txtnew },
+		uid: id  };
 	var filename = path.resolve(__dirname, config.dataPathDest + id + '.json');
 	fs.writeFile(filename, JSON.stringify(newdata, null, '\t'), function (err) {
 		if (err) {
@@ -157,7 +183,7 @@ app.post('/', function (req, res) {
 			res.send('Beim Speichern ist ein Fehler aufgetreten, bitte nochmal versuchen');
 		} else {
 			console.log(filename + ' saved');
-			res.send('OK, gespeichert. Danke sehr! '+ (new Date()).toTimeString());
+			res.send('OK, gespeichert. Danke sehr! ' + (new Date()).toTimeString());
 		}
 	});
 });

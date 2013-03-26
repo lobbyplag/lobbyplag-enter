@@ -5,7 +5,7 @@
 	<title>PlagEnter</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link type="text/css" href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link type="text/css" href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link type="text/css" href="/static/index.css" rel="stylesheet">
 	<link type="text/css" href="/static/chosen/chosen.css" rel="stylesheet"/>
 	<link type="text/css" href="/static/jquery-range/range.css" rel="stylesheet"/>
@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="/static/jquery-range/rangeinput.js"></script>
 	<script type="text/javascript" src="/static/chosen/chosen.jquery.min.js"></script>
 	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/static/shortcut.js"></script>
 	<script type="text/javascript" src="/static/index.js"></script>
 </head>
 
@@ -22,100 +23,179 @@
 <button class="btn help"><i class="icon-question-sign"></i></button>
 <div class="container">
 	<form id="datalove" method="post">
-		<div class="navbar navbar-fixed-top">
+		<div id="header" class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
-				<div class="container">
-					<span class="brand">Plag<span>Enter</span></span>
-					<div class="nav-collapse collapse">
-						<ul class="nav">
-							<li class="group">
-								<label class="control-label" for="doc">Dokument mit Änderungsvorschlägen</label>
-								<select data-placeholder="Dokument auswählen" id="doc" name="doc"
-										class="combobox span6">
-									<option></option>
-									<% data.lobbyistsDocs.forEach( function(entry){%>
-									<optgroup label="<%= entry.lobbyist %>">
-										<% entry.docs.forEach( function(doc){%>
-										<option value="<%= doc.uid %>" pages="<%= doc.data.pages %>"
-												filename="<%- doc.filename %>" lang="<%= doc.lang %>"><%= doc.filename %>
-										</option>
-										<% }); %>
-									</optgroup>
+				<span class="brand">Plag<span>Enter</span></span>
+
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li class="group">
+							<label class="control-label" for="doc">Dokument mit
+								Änderungsvorschlägen <a href="#" class="hint" tabindex="-1" rel="popover"
+														data-content="Angabe aus welcher Datei der Proposal-Text stammt."
+														data-original-title="Proposal-Dokument (Alt + 1)"><i
+										class="icon-question-sign"></i></a>
+							</label>
+							<select data-placeholder="Dokument auswählen" id="doc" name="doc"
+									class="combobox span5">
+								<option></option>
+								<% data.lobbyistsDocs.forEach( function(entry){%>
+								<optgroup label="<%= entry.lobbyist %>">
+									<% entry.docs.forEach( function(doc){%>
+									<option value="<%= doc.uid %>" pages="<%= doc.data.pages %>"
+											filename="<%- doc.filename %>" lang="<%= doc.lang %>"><%= doc.filename %>
+									</option>
 									<% }); %>
-								</select>
-							</li>
-							<li class="group">
-								<label for="pagenr">Seiten-Nr.</label>
-								<input id="pagenr" type="range" name="page" min="0" value="0" placeholder="Nr."/>
-							</li>
-							<br />
-							<li class="group">
-								<label for="directive">Absatz in Direktive <a href="#" class="hint" rel="popover" data-content="Angabe auf welchen Absatz (Kapitel, Unterkapitel, etc.) sich die Änderungsvorschläge beziehen."
-															   data-original-title="Absatz in Direktive"><i class="icon-question-sign"></i></a>
-								</label>
-								<select data-placeholder="Absatz auswählen" id="directive" name="rel"
-										class="combobox span6">
-									<option></option>
-									<% data.directive.data.forEach( function(d){ %>
-									<option value="<%= d.id %>"><%= d.id.expand() %></option>
-									<% }); %>
-								</select>
-							</li>
-							<li class="group">
-								<label for="where">Position <a href="#" class="hint" rel="popover" data-content="Angabe wenn Änderungen z.B. vor/nach Absätzen der Direktive vollzogen werden sollen."
-																data-original-title="Position der Änderungen"><i class="icon-question-sign"></i></a>
-								</label>
-								<select data-placeholder="Stelle auswählen" id="where" name="where" class="combobox span2">
-									<option value="direct">Absatz genau</option>
-									<option value="after">Absatz danach</option>
-									<option value="unknown">Unbekannt</option>
-								</select>
-							</li>
-						</ul>
-					</div>
-					<!--/.nav-collapse -->
+								</optgroup>
+								<% }); %>
+							</select>
+						</li>
+						<li class="group">
+							<label for="pagenr">Seiten-Nr.
+								<a href="#" class="hint" tabindex="-1" rel="popover"
+								   data-content="Angabe auf welcher Seite der Text aus dem Proposal beginnt.<br /><small>(Strg+Rechts) Seitenzahl +1<br />(Strg+Links) Seitenzahl -1</small>"
+								   data-original-title="Seiten-Nummer (Alt + 2)"><i
+										class="icon-question-sign"></i></a>
+							</label>
+							<input id="pagenr" type="range" name="page" min="0" value="0" placeholder="Nr."/>
+						</li>
+						<li class="group">
+							<label for="directive">Absatz in Direktive
+								<a href="#" class="hint" tabindex="-1" rel="popover"
+								   data-content="Angabe auf welchen Absatz (Kapitel, Unterkapitel, etc.) sich der Text aus dem Proposal bezieht.<br /><small>
+								   (Strg+Unten) Nächster Absatz<br />(Strg+Oben) Vorheriger Absatz<br />(Strg+Alt+Unten) Nächster 10ter Absatz<br />(Strg+Alt+Oben) Vorheriger 10ter Absatz</small>"
+								   data-original-title="Absatz in Direktive (Alt + 3)"><i
+										class="icon-question-sign"></i></a>
+							</label>
+							<select data-placeholder="Absatz auswählen" id="directive" name="rel"
+									class="combobox span3">
+								<option></option>
+								<% data.directive.data.forEach( function(d){ %>
+								<option value="<%= d.id %>"><%= d.id.expand() %></option>
+								<% }); %>
+							</select>
+						</li>
+						<li class="group">
+							<label for="where">Position <a href="#" class="hint" tabindex="-1" rel="popover"
+														   data-content="Angabe wenn Änderungen z.B. vor/nach Absätzen der Direktive vollzogen werden sollen."
+														   data-original-title="Position der Änderungen (Alt + 4)"><i
+									class="icon-question-sign"></i></a>
+							</label>
+							<select data-placeholder="Stelle auswählen" id="where" name="where" class="combobox span2">
+								<option value="direct">Absatz genau</option>
+								<option value="after">Absatz danach</option>
+								<option value="unknown">Unbekannt</option>
+							</select>
+						</li>
+						<li class="group">
+							<label for="what">Art <a href="#" class="hint" tabindex="-1" rel="popover"
+													 data-content="Angabe ob der Text aus dem Proposal ein Änderungsvorschlag oder ein Kommentar ist."
+													 data-original-title="Art des Textes (Alt + 5)"><i
+									class="icon-question-sign"></i></a>
+							</label>
+							<select data-placeholder="Art des Textes" id="what" name="what" class="combobox span2">
+								<option value="change" selected="selected">Änderung</option>
+								<option value="comment">Kommentar</option>
+							</select>
+						</li>
+					</ul>
 				</div>
+				<!--/.nav-collapse -->
 			</div>
 		</div>
 		<div class="middlehead">
 			<div class="left">
-					<span class="texthead">Text aus der Direktive <a href="#" class="hint" rel="popover" data-content="Hier den Direktive-Text einfügen wie ihn das Proposal angibt."
-																	 data-original-title="Text aus der Direktive"><i class="icon-question-sign"></i></a></span>
-					<div class="pull-right">
-						<button class="btn btn-custom fetch-text" title="Absatz aus Direktive holen"><i class="icon-download"></i></button>
-						<button class="btn btn-custom clear-text" for="txt_old" title="Textfeld leeren"><i class="icon-remove"></i></button>
+				<div class="texttools border">
+						<span class="texthead">Text aus der Direktive <a href="#" class="hint" tabindex="-1"
+																		 rel="popover"
+																		 data-content="Hier den Direktive-Text einfügen wie ihn das Proposal angibt."
+																		 data-original-title="Text aus der Direktive (Alt + 6)"><i
+								class="icon-question-sign"></i></a></span>
+
+					<div class="textbuttons pull-right">
+						<div class="combocontainer">
+							<select data-placeholder="Sprache" id="langs" class="span2"
+									title="Sprache des Textes aus der Direktive">
+								<option></option>
+								<% for (var key in data.languages.data) { %>
+								<option value="<%= key %>"><%= data.languages.data[key] %></option>
+								<% } %>
+							</select>
+						</div>
+						<button id="fetch-text" class="btn btn-custom" title="Absatz aus Direktive holen (Strg+D)"><i
+								class="icon-download"></i> Laden
+						</button>
+						<span class="btn-custom">&nbsp</span>
+
+						<button class="btn btn-custom clean-text" for="txt_old"
+								title="Doppelte Leerzeichen und Zeilenumbrüche entfernen (Strg+Shift+Links)"><i
+								class="icon-filter"></i> Säubern
+						</button>
+						<span class="btn-custom">&nbsp</span>
+
+						<button class="btn btn-custom clear-text" for="txt_old"
+								title="Textfeld leeren (Strg+Alt+Links)"><i
+								class="icon-remove"></i> Leeren
+						</button>
 					</div>
-					<div class="pull-right">
-						<select data-placeholder="Sprache" id="langs" class="span2" title="Sprache des Textes aus der Direktive">
-							<% for (var key in data.languages.data) { %>
-							<option value="<%= key %>"><%= data.languages.data[key] %></option>
-							<% } %>
-						</select>
+				</div>
+			</div>
+			<div class="right">
+				<div class="texttools border">
+					<span class="texthead">Text aus dem Proposal <a href="#" class="hint" tabindex="-1" rel="popover"
+																	data-content="Hier den Text einfügen wie ihn das Proposal als Änderungsvorschlag angibt.  Bitte leer lassen, wenn der Vorschlag den Direktive-Text streicht."
+																	data-original-title="Text aus dem Proposal (Alt + 7)"><i
+							class="icon-question-sign"></i></a></span>
+
+					<div class="textbuttons pull-right">
+						<button class="btn btn-custom clean-text" for="txt_old"
+								title="Doppelte Leerzeichen und Zeilenumbrüche entfernen (Strg+Shift+Rechts)"><i
+								class="icon-filter"></i> Säubern
+						</button>
+						<span class="btn-custom">&nbsp</span>
+						<button class="btn btn-custom clear-text" for="txt_new"
+								title="Textfeld leeren (Strg+Alt+Rechts)"><i
+								class="icon-remove"></i> Leeren
+						</button>
 					</div>
-			</div><div class="right">
-				<span class="texthead">Text aus dem Proposal <a href="#" class="hint" rel="popover" data-content="Hier den Text einfügen wie ihn das Proposal als Änderungsvorschlag angibt.  Bitte leer lassen, wenn der Vorschlag den Direktive-Text streicht."
-																data-original-title="Text aus dem Proposal"><i class="icon-question-sign"></i></a></span>
-				<div class="pull-right">
-					<button class="btn btn-custom clear-text" for="txt_new" title="Textfeld leeren"><i class="icon-remove"></i></button>
 				</div>
 			</div>
 		</div>
 		<div class="middle">
 			<div class="left">
 				<textarea id="txt_old" name="txtold" rows=10 cols=10></textarea>
-			</div><div class="right">
+			</div>
+			<div class="right">
 				<textarea id="txt_new" name="txtnew" rows=10 cols=10></textarea>
 			</div>
 		</div>
 		<div id="bottom" class="bottom">
-			<a href="#" class="btn" id="doclink" style="display:none"></a>
-			<iframe id="pdf" src="about:blank" frameborder="0" style="display:none"></iframe>
+			<div id="docinfo" style="display:none">
+				<h4 id="docname">Dokument</h4>
+				<!--<a href="#" class="btn doclinks" id="doclink">Dokument mit Browser öffnen</a>-->
+				<a href="#" class="btn doclinks" id="docgooglelink">Dokument mit Google Docs öffnen</a>
+			</div>
+			<iframe id="pdf" class="border" src="about:blank" frameborder="0" style="display:none"></iframe>
 		</div>
 		<div class="foot">
-			<button type="submit" class="btn btn-primary">Speichern</button>
+			<button type="submit" class="btn btn-primary" title="Shortcut (Strg+S)">Speichern</button>
 			<div id="status" class="alert alert-info"></div>
 		</div>
 	</form>
+</div>
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">Modal header</h3>
+	</div>
+	<div class="modal-body">
+		<p>One fine body…</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		<button class="btn btn-primary">OK</button>
+	</div>
 </div>
 </body>
 </html>
