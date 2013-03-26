@@ -32,8 +32,8 @@ function displayDocInfos(name, lang, filename) {
 		+ '&embedded=true';
 	$("#docname").text(name);
 	$("#docgooglelink").attr('url', url);
-	//url = '/static/raw/lobby-documents/' + filename;
-	//$("#doclink").attr('url', url);
+	$("#doclink").attr('url', '/pdfobject/' + filename);
+	$("#docpdflink").attr('url', '/pdf/' + filename);
 	$("#docinfo").show();
 }
 

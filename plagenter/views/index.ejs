@@ -25,10 +25,11 @@
 	<form id="datalove" method="post">
 		<div id="header" class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
-				<span class="brand">Plag<span>Enter</span></span>
-
 				<div class="nav-collapse collapse">
 					<ul class="nav">
+						<li class="group">
+						<img src="/static/logo.png" class="logo" />
+						</li>
 						<li class="group">
 							<label class="control-label" for="doc">Dokument mit
 								Änderungsvorschlägen <a href="#" class="hint" tabindex="-1" rel="popover"
@@ -172,8 +173,9 @@
 		<div id="bottom" class="bottom">
 			<div id="docinfo" style="display:none">
 				<h4 id="docname">Dokument</h4>
-				<!--<a href="#" class="btn doclinks" id="doclink">Dokument mit Browser öffnen</a>-->
-				<a href="#" class="btn doclinks" id="docgooglelink">Dokument mit Google Docs öffnen</a>
+				<a href="#" class="btn doclinks" id="doclink">mit Browser anzeigen</a>
+				<a href="#" class="btn doclinks" id="docpdflink">mit Javascript anzeigen</a>
+				<a href="#" class="btn doclinks" id="docgooglelink">mit Google Docs anzeigen</a>
 			</div>
 			<iframe id="pdf" class="border" src="about:blank" frameborder="0" style="display:none"></iframe>
 		</div>

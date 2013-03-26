@@ -130,6 +130,19 @@ app.get('/', function (req, res) {
 	res.render('index', { data: data });
 });
 
+app.get('/pdf/:pdf', function (req, res) {
+	res.render('pdf', { pdf: '/raw/'+req.params.pdf });
+});
+
+app.get('/pdfobject/:pdf', function (req, res) {
+	res.render('pdfobject', { pdf: '/raw/'+req.params.pdf });
+});
+
+app.get('/raw/:pdf', function (req, res) {
+	var filename = path.resolve(__dirname, config.rawDataPathSource + req.params.pdf);
+	res.sendfile(filename);
+});
+
 app.get('/directive/', function (req, res) {
 	var url_parts = url.parse(req.url, true),
 		query = url_parts.query;
@@ -231,7 +244,6 @@ function init(cb) {
 		}
 	});
 }
-
 
 init(function () {
 	app.listen(config.port);
