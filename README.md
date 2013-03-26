@@ -22,6 +22,7 @@ config = {
 	port: 3000			//port for the server
 };
 ````
+Heads up: The paths MUST be declared relative.
 
 ## plagenter/app.js
 
