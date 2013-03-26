@@ -2,7 +2,7 @@
 
 A small tool for manual entering data for the [LobbyPlag](http://www.lobbyplag.eu/) project.
 
-Needed Data: `directive.json`, `documents.json`, `lobbyists.json` and `lang.json`
+Needed Data: `directive.json`, `documents.json`, `lobbyists.json`, `lang.json` and the raw pdf files
 
 ##Requirements
 
@@ -18,6 +18,7 @@ modules for node js in path `plagenter/`
 config = {
 	dataPathSource: '../data/',	//path to documents.json & directive.json
 	dataPathDest: '../newdata/',	//path where to save the result fragment json files
+	rawDataPathSource: '../raw/',	//path to pdfs
 	port: 3000			//port for the server
 };
 ````
