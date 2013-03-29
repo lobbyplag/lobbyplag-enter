@@ -31,36 +31,6 @@
 						<img src="/static/logo.png" class="logo" />
 						</li>
 						<li class="group">
-							<label class="control-label" for="doc">Dokument mit
-								Änderungsvorschlägen <a href="#" class="hint" tabindex="-1" rel="popover"
-														data-content="Angabe aus welcher Datei der Proposal-Text stammt."
-														data-original-title="Proposal-Dokument (Alt + 1)"><i
-										class="icon-question-sign"></i></a>
-							</label>
-							<select data-placeholder="Dokument auswählen" id="doc" name="doc"
-									class="combobox span5">
-								<option></option>
-								<% data.lobbyistsDocs.forEach( function(entry){%>
-								<optgroup label="<%= entry.lobbyist %>">
-									<% entry.docs.forEach( function(doc){%>
-									<option value="<%= doc.uid %>" pages="<%= doc.data.pages %>"
-											filename="<%- doc.filename %>" lang="<%= doc.lang %>"><%= doc.filename %>
-									</option>
-									<% }); %>
-								</optgroup>
-								<% }); %>
-							</select>
-						</li>
-						<li class="group">
-							<label for="pagenr">Seiten-Nr.
-								<a href="#" class="hint" tabindex="-1" rel="popover"
-								   data-content="Angabe auf welcher Seite der Text aus dem Proposal beginnt.<br /><small>(Strg+Rechts) Seitenzahl +1<br />(Strg+Links) Seitenzahl -1</small>"
-								   data-original-title="Seiten-Nummer (Alt + 2)"><i
-										class="icon-question-sign"></i></a>
-							</label>
-							<input id="pagenr" type="range" name="page" min="0" value="0" placeholder="Nr."/>
-						</li>
-						<li class="group">
 							<label for="directive">Absatz in Direktive
 								<a href="#" class="hint" tabindex="-1" rel="popover"
 								   data-content="Angabe auf welchen Absatz (Kapitel, Unterkapitel, etc.) sich der Text aus dem Proposal bezieht.<br /><small>
@@ -99,6 +69,36 @@
 								<option value="comment">Kommentar</option>
 							</select>
 						</li>
+						<li class="group">
+							<label class="control-label" for="doc">Dokument mit
+								Änderungsvorschlägen <a href="#" class="hint" tabindex="-1" rel="popover"
+														data-content="Angabe aus welcher Datei der Proposal-Text stammt."
+														data-original-title="Proposal-Dokument (Alt + 1)"><i
+										class="icon-question-sign"></i></a>
+							</label>
+							<select data-placeholder="Dokument auswählen" id="doc" name="doc"
+									class="combobox span5">
+								<option></option>
+								<% data.lobbyistsDocs.forEach( function(entry){%>
+								<optgroup label="<%= entry.lobbyist %>">
+									<% entry.docs.forEach( function(doc){%>
+									<option value="<%= doc.uid %>" pages="<%= doc.data.pages %>"
+											filename="<%- doc.filename %>" lang="<%= doc.lang %>"><%= doc.filename %>
+									</option>
+									<% }); %>
+								</optgroup>
+								<% }); %>
+							</select>
+						</li>
+						<li class="group">
+							<label for="pagenr">Seiten-Nr.
+								<a href="#" class="hint" tabindex="-1" rel="popover"
+								   data-content="Angabe auf welcher Seite der Text aus dem Proposal beginnt.<br /><small>(Strg+Rechts) Seitenzahl +1<br />(Strg+Links) Seitenzahl -1</small>"
+								   data-original-title="Seiten-Nummer (Alt + 2)"><i
+										class="icon-question-sign"></i></a>
+							</label>
+							<input id="pagenr" type="range" name="page" min="0" value="0" placeholder="Nr."/>
+						</li>
 					</ul>
 				</div>
 				<!--/.nav-collapse -->
@@ -129,7 +129,7 @@
 						<span class="btn-custom">&nbsp</span>
 
 						<button class="btn btn-custom clean-text" for="txt_old"
-								title="Doppelte Leerzeichen und Zeilenumbrüche entfernen (Strg+Shift+Links)"><i
+								title="Doppelte Leerzeichen und Zeilenumbrüche entfernen (Alt+Shift+Links)"><i
 								class="icon-filter"></i> Säubern
 						</button>
 						<span class="btn-custom">&nbsp</span>
@@ -149,8 +149,8 @@
 							class="icon-question-sign"></i></a></span>
 
 					<div class="textbuttons pull-right">
-						<button class="btn btn-custom clean-text" for="txt_old"
-								title="Doppelte Leerzeichen und Zeilenumbrüche entfernen (Strg+Shift+Rechts)"><i
+						<button class="btn btn-custom clean-text" for="txt_new"
+								title="Doppelte Leerzeichen und Zeilenumbrüche entfernen (Alt+Shift+Rechts)"><i
 								class="icon-filter"></i> Säubern
 						</button>
 						<span class="btn-custom">&nbsp</span>

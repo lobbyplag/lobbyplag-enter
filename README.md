@@ -60,10 +60,10 @@ e.g. b43f14c7005de400547b83f079130c0442432713.json
  	ctrl+L
  	Clear both Textareas
 
-	ctrl+alt+left
+	alt+shift+left
 	Clear Left (Directive) Textarea
 
-	ctrl+alt+right
+	alt+shift+right
 	Clear Right (Proposal) Textarea
 
 	ctrl+right

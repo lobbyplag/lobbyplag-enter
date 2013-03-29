@@ -16,12 +16,14 @@ html {
 
 .group {
 	padding-top: 12px;
-	padding-right: 8px;
+	padding-right: 4px;
+	padding-left: 4px;
 }
 
 .logo {
 	display: inline-block;
 	height:50px;
+	width:50px;
 	margin-left: 20px;
 }
 

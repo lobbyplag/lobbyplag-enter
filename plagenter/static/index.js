@@ -78,6 +78,14 @@ function setupKeyCommands() {
 		$('#txt_new').val('');
 		return false;
 	});
+	shortcut.add("shift+alt+left", function () {
+		clean($('#txt_old'));
+		return false;
+	});
+	shortcut.add("shift+alt+right", function () {
+		clean($('#txt_new'));
+		return false;
+	});
 	shortcut.add("ctrl+right", function () {
 		$(":range").data("rangeinput").step(1);
 		return false;
