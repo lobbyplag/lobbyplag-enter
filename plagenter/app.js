@@ -2,6 +2,7 @@ var config = require('./config');
 var fs = require('fs');
 var path = require('path');
 var express = require('express');
+var moment = require('moment');
 var url = require('url');
 var app = express();
 var crypto = require('crypto');
@@ -31,19 +32,19 @@ String.prototype.expand = function () {
 				return "|Section ";
 				break;
 			case "a":
-				return "|Article ";
+				return "|Art. ";
 				break;
 			case "p":
-				return "|Paragraph ";
+				return "|Par. ";
 				break;
 			case "i":
-				return "|Point ";
+				return "|P. ";
 				break;
 			case "t":
 				return "|Text ";
 				break;
 		}
-	}).replace(/^\|/, '').split(/\|/g).join(" – ");
+	}).replace(/^\|/, '').split(/\|/g).join(" - ");
 };
 
 //base data
@@ -111,6 +112,7 @@ var
 
 // configure express
 app.configure('all', function () {
+	app.use(express.compress());
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'ejs');
 	app.use(express.favicon(__dirname + '/static/favicon.ico'));
@@ -195,7 +197,7 @@ app.post('/', function (req, res) {
 			res.send('Beim Speichern ist ein Fehler aufgetreten, bitte nochmal versuchen');
 		} else {
 			console.log(filename + ' saved');
-			res.send('OK, gespeichert. Danke sehr! ' + (new Date()).toTimeString());
+			res.send('OK, gespeichert. Danke sehr! ' + moment().format('DD.MM.YYYY, HH:mm'));
 		}
 	});
 });

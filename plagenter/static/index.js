@@ -6,12 +6,19 @@ function error(msg) {
 	div.toggle(true);
 }
 
+var
+	successtimeout;
+
 function status(msg) {
+	clearTimeout(successtimeout);
 	var div = $("#status");
 	div.empty().append(msg);
 	div.removeClass('alert-error');
 	div.addClass('alert-info');
 	div.toggle(true);
+	successtimeout = setTimeout(function () {
+		div.fadeOut();
+	}, 3000);
 }
 
 function directiveSelection(offset) {
