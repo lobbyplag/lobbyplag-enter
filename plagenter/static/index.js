@@ -111,23 +111,23 @@ function setupKeyCommands() {
 		return false;
 	});
 	shortcut.add("alt+1", function () {
-		$("#doc" + "_chzn").trigger('mousedown');
-		return false;
-	});
-	shortcut.add("alt+2", function () {
-		$("#pagenr").focus();
-		return false;
-	});
-	shortcut.add("alt+3", function () {
 		$("#directive" + "_chzn").trigger('mousedown');
 		return false;
 	});
-	shortcut.add("alt+4", function () {
+	shortcut.add("alt+2", function () {
 		$("#where" + "_chzn").trigger('mousedown');
 		return false;
 	});
-	shortcut.add("alt+5", function () {
+	shortcut.add("alt+3", function () {
 		$("#what" + "_chzn").trigger('mousedown');
+		return false;
+	});
+	shortcut.add("alt+4", function () {
+		$("#doc" + "_chzn").trigger('mousedown');
+		return false;
+	});
+	shortcut.add("alt+5", function () {
+		$("#pagenr").focus();
 		return false;
 	});
 	shortcut.add("alt+6", function () {
@@ -194,10 +194,13 @@ function clean(textarea) {
 }
 
 function resizeContent() {
+	//poor layouting
 	var space = 8;
 	var height = $("#header").height() + space;
 	var middlehead = $(".middlehead");
 	middlehead.css('top', height);
+
+
 	height += middlehead.height();
 	var middle = $(".middle");
 	middle.css('top', height);

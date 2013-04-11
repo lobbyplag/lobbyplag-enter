@@ -87,19 +87,19 @@ e.g. b43f14c7005de400547b83f079130c0442432713.json
 	Select 10th. previous Directive Part
 
 	alt+1
-	Focus Document Combobox
-
-	alt+2
-	Focus Page Nr Input
-
-	alt+3
 	Focus Directive Combobox
 
-	alt+4
+	alt+2
 	Focus Directive Position Combobox
 
-	alt+5
+	alt+3
 	Focus Proposal Type Combobox
+
+	alt+4
+	Focus Document Combobox
+
+	alt+5
+	Focus Page Nr Input
 
 	alt+6
 	Focus Textarea Directive

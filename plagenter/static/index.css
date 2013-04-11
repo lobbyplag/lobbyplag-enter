@@ -24,7 +24,10 @@ html {
 	display: inline-block;
 	height:50px;
 	width:50px;
-	margin-left: 20px;
+}
+
+.nav-top {
+	margin-left: 20px !important;
 }
 
 .head, .foot, .middle, .bottom, .middlehead, .splitter {
@@ -152,7 +155,12 @@ textarea {
 	height: 26px !important;
 }
 
+#fetch-text {
+	margin-top: 2px;
+}
+
 .combocontainer {
+	margin-top: 2px;
 	float: left;
 	height: 28px !important;
 }

@@ -131,11 +131,11 @@ app.get('/', function (req, res) {
 });
 
 app.get('/pdf/:pdf', function (req, res) {
-	res.render('pdf', { pdf: '/raw/'+req.params.pdf });
+	res.render('pdf', { pdf: '/raw/' + req.params.pdf });
 });
 
 app.get('/pdfobject/:pdf', function (req, res) {
-	res.render('pdfobject', { pdf: '/raw/'+req.params.pdf });
+	res.render('pdfobject', { pdf: '/raw/' + req.params.pdf });
 });
 
 app.get('/raw/:pdf', function (req, res) {
@@ -152,7 +152,6 @@ app.get('/directive/', function (req, res) {
 	var text = (d ? d.text[query.lang] : '');
 	res.send(text);
 });
-
 
 app.post('/', function (req, res) {
 	//console.log('[Server] Epic win, somebody is working');

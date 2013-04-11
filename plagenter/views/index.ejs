@@ -26,7 +26,7 @@
 		<div id="header" class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="nav-collapse collapse">
-					<ul class="nav">
+					<ul class="nav nav-top">
 						<li class="group">
 						<img src="/static/logo.png" class="logo" />
 						</li>
@@ -113,7 +113,6 @@
 																		 data-original-title="Text aus der Direktive (Alt + 6)"><i
 								class="icon-question-sign"></i></a></span>
 
-					<div class="textbuttons pull-right">
 						<div class="combocontainer">
 							<select data-placeholder="Sprache" id="langs" class="span2"
 									title="Sprache des Textes aus der Direktive">
@@ -124,19 +123,20 @@
 							</select>
 						</div>
 						<button id="fetch-text" class="btn btn-custom" title="Absatz aus Direktive holen (Strg+D)"><i
-								class="icon-download"></i> Laden
+								class="icon-download" caption="Laden"></i>
 						</button>
-						<span class="btn-custom">&nbsp</span>
+
+					<div class="textbuttons pull-right">
 
 						<button class="btn btn-custom clean-text" for="txt_old"
 								title="Doppelte Leerzeichen und Zeilenumbrüche entfernen (Alt+Shift+Links)"><i
-								class="icon-filter"></i> Säubern
+								class="icon-filter" caption="Säubern"></i>
 						</button>
 						<span class="btn-custom">&nbsp</span>
 
 						<button class="btn btn-custom clear-text" for="txt_old"
 								title="Textfeld leeren (Strg+Alt+Links)"><i
-								class="icon-remove"></i> Leeren
+								class="icon-remove" caption="Leeren"></i>
 						</button>
 					</div>
 				</div>
@@ -151,12 +151,12 @@
 					<div class="textbuttons pull-right">
 						<button class="btn btn-custom clean-text" for="txt_new"
 								title="Doppelte Leerzeichen und Zeilenumbrüche entfernen (Alt+Shift+Rechts)"><i
-								class="icon-filter"></i> Säubern
+								class="icon-filter" caption="Säubern"></i>
 						</button>
 						<span class="btn-custom">&nbsp</span>
 						<button class="btn btn-custom clear-text" for="txt_new"
 								title="Textfeld leeren (Strg+Alt+Rechts)"><i
-								class="icon-remove"></i> Leeren
+								class="icon-remove" caption="Leeren"></i>
 						</button>
 					</div>
 				</div>
